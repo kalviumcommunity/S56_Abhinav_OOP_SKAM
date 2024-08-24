@@ -53,18 +53,32 @@ class Assignment {
 
 public class Main {
     public static void main(String[] args) {
-        User user1 = new User("S101", "Abhinav", "abhinav.singh@kalvium.community");
-        User user2 = new User("M101", "Manu", "manu.a@kalvium.community");
-        Assignment assignment1 = new Assignment("K101", "EPS Assignment", "Write a case study report on SriLanka Bankruptcy", "30-08-2024");
+        User[] users = {
+                new User("S101", "Abhinav", "abhinav.singh@kalvium.community"),
+                new User("S102","Ayush Ghodke","ayush.ghodke@kalvium.community"),
+                new User("M101", "Manu", "manu.a@kalvium.community"),
+                new User("M102","Deepakshi","deepakshi.sharma@kalvium.community")
+        };
 
-        user1.displayUserInfo();
-        user2.displayUserInfo();
-        user1.updateName("Abhishek");
-        user1.updateEmail("abhishek@kalvium.community");
-        user1.displayUserInfo();
+        Assignment[] assignments = {
+                new Assignment("K101", "EPS Assignment", "Write a case study report on SriLanka Bankruptcy", "30-08-2024"),
+                new Assignment("K102", "OOP Assignment", "Implement a project using OOP concepts", "05-09-2024"),
+                new Assignment("K103", "Dojo Assignment", "Solve 5 Problems in Dojo Workout.", "10-09-2024")
+        };
 
-        assignment1.displayAssignmentInfo();
-        assignment1.updateDueDate("02-09-2024");
-        assignment1.displayAssignmentInfo();
+        for (User user : users) {
+            user.displayUserInfo();
+        }
+
+        users[0].updateName("Abhishek");
+        users[0].updateEmail("abhishek@kalvium.community");
+        users[0].displayUserInfo();
+
+        for (Assignment assignment : assignments) {
+            assignment.displayAssignmentInfo();
+        }
+
+        assignments[0].updateDueDate("02-09-2024");
+        assignments[0].displayAssignmentInfo();
     }
 }
