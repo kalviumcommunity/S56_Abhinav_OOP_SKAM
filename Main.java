@@ -2,11 +2,14 @@ class User {
     private String id;
     private String name;
     private String email;
+    private static int userCount = 0;
+    private static String organization = "Kalvium";
 
     public User(String id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
+        userCount++;
     }
 
     public void displayUserInfo() {
@@ -23,6 +26,12 @@ class User {
     public void updateEmail(String newEmail) {
         this.email = newEmail;
     }
+    public static int getUserCount() {
+        return userCount;
+    }
+    public static String getOrganization(){
+        return organization;
+    }
 }
 
 class Assignment {
@@ -30,12 +39,15 @@ class Assignment {
     private String title;
     private String description;
     private String dueDate;
+    private static int assignmentCount = 0;
+
 
     public Assignment(String id, String title, String description, String dueDate) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
+        assignmentCount++;
     }
 
     public void displayAssignmentInfo() {
@@ -43,11 +55,16 @@ class Assignment {
         System.out.println("Assignment Title: " + this.title);
         System.out.println("Assignment Description: " + this.description);
         System.out.println("Assignment Due Date: " + this.dueDate);
+
         System.out.println();
     }
 
     public void updateDueDate(String newDueDate) {
         this.dueDate = newDueDate;
+    }
+
+    public static int getAssignmentCount() {
+        return assignmentCount;
     }
 }
 
@@ -84,5 +101,9 @@ public class Main {
         assignments[0].displayAssignmentInfo();
 
 //        JAVA DOESN'T SUPPORT DELETE KEYWORD
+        System.out.println("Organization: "+ User.getOrganization());
+        System.out.println("Total Users: " + User.getUserCount());
+        System.out.println("Total Assignments: " + Assignment.getAssignmentCount());
+
     }
 }
