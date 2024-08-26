@@ -56,6 +56,8 @@ public class Main {
         User[] users = {
                 new User("S101", "Abhinav", "abhinav.singh@kalvium.community"),
                 new User("S102","Ayush Ghodke","ayush.ghodke@kalvium.community"),
+                new User("S103","Shriyans Jindal","shriyans.jindal@kalvium.community"),
+                new User("S104","Dhruv Patil","dhruv.patil@kalvium.community"),
                 new User("M101", "Manu", "manu.a@kalvium.community"),
                 new User("M102","Deepakshi","deepakshi.sharma@kalvium.community")
         };
@@ -80,5 +82,7 @@ public class Main {
 
         assignments[0].updateDueDate("02-09-2024");
         assignments[0].displayAssignmentInfo();
+
+//        JAVA DOESN'T SUPPORT DELETE KEYWORD
     }
 }
