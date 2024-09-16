@@ -1,3 +1,36 @@
+abstract class Report {
+
+    protected String reportId;
+    protected String reportTitle;
+
+    public Report(String reportId, String reportTitle) {
+        this.reportId = reportId;
+        this.reportTitle = reportTitle;
+    }
+
+    public abstract void generateReport();
+
+    public void displayReportDetails() {
+        System.out.println("Report ID: " + reportId);
+        System.out.println("Report Title: " + reportTitle);
+    }
+}
+
+class AssignmentReport extends Report {
+
+    private String assignmentDetails;
+
+    public AssignmentReport(String reportId, String reportTitle, String assignmentDetails) {
+        super(reportId, reportTitle);
+        this.assignmentDetails = assignmentDetails;
+    }
+
+    @Override
+    public void generateReport() {
+        System.out.println("Generating report for assignment: " + assignmentDetails);
+    }
+}
+
 class User {
     // Private attributes
     private String id;
@@ -133,6 +166,10 @@ public class Main {
 
         assignments[0].setDueDate("02-09-2024");
         assignments[0].displayAssignmentInfo();
+
+        AssignmentReport report = new AssignmentReport("R101", "OOP Assignment Report", "Details of the OOP Assignment");
+        report.displayReportDetails();
+        report.generateReport();
 
         System.out.println("Organization: " + User.getOrganization());
         System.out.println("Total Users: " + User.getUserCount());
