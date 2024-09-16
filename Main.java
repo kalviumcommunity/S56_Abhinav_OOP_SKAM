@@ -3,7 +3,14 @@ abstract class Report {
     protected String reportId;
     protected String reportTitle;
 
+    public Report() {
+        // Default constructor
+        this.reportId = "Default Report ID";
+        this.reportTitle = "Default Report Title";
+    }
+
     public Report(String reportId, String reportTitle) {
+        // Parameterized constructor
         this.reportId = reportId;
         this.reportTitle = reportTitle;
     }
@@ -20,7 +27,14 @@ class AssignmentReport extends Report {
 
     private String assignmentDetails;
 
+    public AssignmentReport() {
+        // Default constructor
+        super();
+        this.assignmentDetails = "Default Assignment Details";
+    }
+
     public AssignmentReport(String reportId, String reportTitle, String assignmentDetails) {
+        // Parameterized constructor
         super(reportId, reportTitle);
         this.assignmentDetails = assignmentDetails;
     }
@@ -32,13 +46,21 @@ class AssignmentReport extends Report {
 }
 
 class User {
-    // Private attributes
     private String id;
     private String name;
     private String email;
     private static int userCount = 0;
     private static String organization = "Kalvium";
 
+    // Default constructor
+    public User() {
+        this.id = "Default ID";
+        this.name = "Default Name";
+        this.email = "Default Email";
+        userCount++;
+    }
+
+    // Parameterized constructor
     public User(String id, String name, String email) {
         this.id = id;
         this.name = name;
@@ -46,7 +68,6 @@ class User {
         userCount++;
     }
 
-    // Getter methods
     public String getId() {
         return id;
     }
@@ -59,7 +80,6 @@ class User {
         return email;
     }
 
-    // Setter methods
     public void setName(String name) {
         this.name = name;
     }
@@ -85,13 +105,22 @@ class User {
 }
 
 class Assignment {
-    // Private attributes
     private String id;
     private String title;
     private String description;
     private String dueDate;
     private static int assignmentCount = 0;
 
+    // Default constructor
+    public Assignment() {
+        this.id = "Default Assignment ID";
+        this.title = "Default Title";
+        this.description = "Default Description";
+        this.dueDate = "Default Due Date";
+        assignmentCount++;
+    }
+
+    // Parameterized constructor
     public Assignment(String id, String title, String description, String dueDate) {
         this.id = id;
         this.title = title;
@@ -100,7 +129,6 @@ class Assignment {
         assignmentCount++;
     }
 
-    // Getter methods
     public String getId() {
         return id;
     }
@@ -117,7 +145,6 @@ class Assignment {
         return dueDate;
     }
 
-    // Setter methods
     public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
@@ -137,35 +164,35 @@ class Assignment {
 
 public class Main {
     public static void main(String[] args) {
+        //default constructors
+        User defaultUser = new User();
+        defaultUser.displayUserInfo();
+
+        Assignment defaultAssignment = new Assignment();
+        defaultAssignment.displayAssignmentInfo();
+
+        AssignmentReport defaultReport = new AssignmentReport();
+        defaultReport.displayReportDetails();
+        defaultReport.generateReport();
+
+        //parameterized constructors
         User[] users = {
                 new User("S101", "Abhinav", "abhinav.singh@kalvium.community"),
-                new User("S102", "Ayush Ghodke", "ayush.ghodke@kalvium.community"),
-                new User("S103", "Shriyans Jindal", "shriyans.jindal@kalvium.community"),
-                new User("S104", "Dhruv Patil", "dhruv.patil@kalvium.community"),
-                new User("M101", "Manu", "manu.a@kalvium.community"),
-                new User("M102", "Deepakshi", "deepakshi.sharma@kalvium.community")
+                new User("S102", "Ayush Ghodke", "ayush.ghodke@kalvium.community")
         };
 
         Assignment[] assignments = {
-                new Assignment("K101", "EPS Assignment", "Write a case study report on SriLanka Bankruptcy", "30-08-2024"),
-                new Assignment("K102", "OOP Assignment", "Implement a project using OOP concepts", "05-09-2024"),
-                new Assignment("K103", "Dojo Assignment", "Solve 5 Problems in Dojo Workout.", "10-09-2024")
+                new Assignment("K101", "EPS Assignment", "Write a case study report on Sri Lanka Bankruptcy", "30-08-2024"),
+                new Assignment("K102", "OOP Assignment", "Implement a project using OOP concepts", "05-09-2024")
         };
 
         for (User user : users) {
             user.displayUserInfo();
         }
 
-        users[0].setName("Abhishek");
-        users[0].setEmail("abhishek@kalvium.community");
-        users[0].displayUserInfo();
-
         for (Assignment assignment : assignments) {
             assignment.displayAssignmentInfo();
         }
-
-        assignments[0].setDueDate("02-09-2024");
-        assignments[0].displayAssignmentInfo();
 
         AssignmentReport report = new AssignmentReport("R101", "OOP Assignment Report", "Details of the OOP Assignment");
         report.displayReportDetails();
