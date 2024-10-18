@@ -1,58 +1,10 @@
-abstract class Report {
-
-    protected String reportId;
-    protected String reportTitle;
-
-    public Report() {
-        // Default constructor
-        this.reportId = "Default Report ID";
-        this.reportTitle = "Default Report Title";
-    }
-
-    public Report(String reportId, String reportTitle) {
-        // Parameterized constructor
-        this.reportId = reportId;
-        this.reportTitle = reportTitle;
-    }
-
-    public abstract void generateReport();
-
-    public void displayReportDetails() {
-        System.out.println("Report ID: " + reportId);
-        System.out.println("Report Title: " + reportTitle);
-    }
-}
-
-class AssignmentReport extends Report {
-
-    private String assignmentDetails;
-
-    public AssignmentReport() {
-        // Default constructor
-        super();
-        this.assignmentDetails = "Default Assignment Details";
-    }
-
-    public AssignmentReport(String reportId, String reportTitle, String assignmentDetails) {
-        // Parameterized constructor
-        super(reportId, reportTitle);
-        this.assignmentDetails = assignmentDetails;
-    }
-
-    @Override
-    public void generateReport() {
-        System.out.println("Generating report for assignment: " + assignmentDetails);
-    }
-}
-
 class User {
-    private String id;
-    private String name;
-    private String email;
-    private static int userCount = 0;
-    private static String organization = "Kalvium";
+    protected String id;
+    protected String name;
+    protected String email;
+    protected static int userCount = 0;
+    protected static String organization = "Kalvium";
 
-    // Default constructor
     public User() {
         this.id = "Default ID";
         this.name = "Default Name";
@@ -60,7 +12,6 @@ class User {
         userCount++;
     }
 
-    // Parameterized constructor
     public User(String id, String name, String email) {
         this.id = id;
         this.name = name;
@@ -104,6 +55,95 @@ class User {
     }
 }
 
+class Student extends User {
+    private String studentId;
+    private String major;
+
+    public Student() {
+        super();
+        this.studentId = "Default Student ID";
+        this.major = "Default Major";
+    }
+
+    public Student(String id, String name, String email, String studentId, String major) {
+        super(id, name, email);
+        this.studentId = studentId;
+        this.major = major;
+    }
+
+    public void displayStudentInfo() {
+        displayUserInfo();
+        System.out.println("Student ID: " + studentId);
+        System.out.println("Major: " + major);
+        System.out.println();
+    }
+}
+
+class Mentor extends User {
+    private String mentorId;
+    private String expertise;
+
+    public Mentor() {
+        super();
+        this.mentorId = "Default Mentor ID";
+        this.expertise = "Default Expertise";
+    }
+
+    public Mentor(String id, String name, String email, String mentorId, String expertise) {
+        super(id, name, email);
+        this.mentorId = mentorId;
+        this.expertise = expertise;
+    }
+
+    public void displayMentorInfo() {
+        displayUserInfo();
+        System.out.println("Mentor ID: " + mentorId);
+        System.out.println("Expertise: " + expertise);
+        System.out.println();
+    }
+}
+
+abstract class Report {
+    protected String reportId;
+    protected String reportTitle;
+
+    public Report() {
+        this.reportId = "Default Report ID";
+        this.reportTitle = "Default Report Title";
+    }
+
+    public Report(String reportId, String reportTitle) {
+        this.reportId = reportId;
+        this.reportTitle = reportTitle;
+    }
+
+    public abstract void generateReport();
+
+    public void displayReportDetails() {
+        System.out.println("Report ID: " + reportId);
+        System.out.println("Report Title: " + reportTitle);
+    }
+}
+
+class AssignmentReport extends Report {
+    private String assignmentDetails;
+
+    public AssignmentReport() {
+        super();
+        this.assignmentDetails = "Default Assignment Details";
+    }
+
+    public AssignmentReport(String reportId, String reportTitle, String assignmentDetails) {
+        super(reportId, reportTitle);
+        this.assignmentDetails = assignmentDetails;
+    }
+
+    @Override
+    public void generateReport() {
+        System.out.println("Generating report for assignment: " + assignmentDetails);
+    }
+}
+
 class Assignment {
     private String id;
     private String title;
@@ -111,7 +151,6 @@ class Assignment {
     private String dueDate;
     private static int assignmentCount = 0;
 
-    // Default constructor
     public Assignment() {
         this.id = "Default Assignment ID";
         this.title = "Default Title";
@@ -120,7 +159,6 @@ class Assignment {
         assignmentCount++;
     }
 
-    // Parameterized constructor
     public Assignment(String id, String title, String description, String dueDate) {
         this.id = id;
         this.title = title;
@@ -164,39 +202,31 @@ class Assignment {
 
 public class Main {
     public static void main(String[] args) {
-        //default constructors
-        User defaultUser = new User();
-        defaultUser.displayUserInfo();
+        Student student1 = new Student("S101", "Abhinav", "abhinav.singh@kalvium.community", "ST101", "Computer Science");
+        Mentor mentor1 = new Mentor("M201", "Chandan", "chandan@kalvium.community", "MT201", "OOP Concepts");
 
-        Assignment defaultAssignment = new Assignment();
-        defaultAssignment.displayAssignmentInfo();
+        student1.displayStudentInfo();
+        mentor1.displayMentorInfo();
 
         AssignmentReport defaultReport = new AssignmentReport();
         defaultReport.displayReportDetails();
         defaultReport.generateReport();
 
-        //parameterized constructors
-        User[] users = {
-                new User("S101", "Abhinav", "abhinav.singh@kalvium.community"),
-                new User("S102", "Ayush Ghodke", "ayush.ghodke@kalvium.community")
-        };
+        AssignmentReport report = new AssignmentReport("R101", "OOP Assignment Report", "Details of the OOP Assignment");
+        report.displayReportDetails();
+        report.generateReport();
+
+        Assignment defaultAssignment = new Assignment();
+        defaultAssignment.displayAssignmentInfo();
 
         Assignment[] assignments = {
                 new Assignment("K101", "EPS Assignment", "Write a case study report on Sri Lanka Bankruptcy", "30-08-2024"),
                 new Assignment("K102", "OOP Assignment", "Implement a project using OOP concepts", "05-09-2024")
         };
 
-        for (User user : users) {
-            user.displayUserInfo();
-        }
-
         for (Assignment assignment : assignments) {
             assignment.displayAssignmentInfo();
         }
-
-        AssignmentReport report = new AssignmentReport("R101", "OOP Assignment Report", "Details of the OOP Assignment");
-        report.displayReportDetails();
-        report.generateReport();
 
         System.out.println("Organization: " + User.getOrganization());
         System.out.println("Total Users: " + User.getUserCount());
