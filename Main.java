@@ -187,6 +187,7 @@ class Assignment {
         this.dueDate = dueDate;
     }
 
+    // original method
     public void displayAssignmentInfo() {
         System.out.println("Assignment ID: " + getId());
         System.out.println("Assignment Title: " + getTitle());
@@ -195,38 +196,59 @@ class Assignment {
         System.out.println();
     }
 
+//method overloading
+    public void displayAssignmentInfo(boolean showDueDate) {
+        System.out.println("Assignment ID: " + getId());
+        System.out.println("Assignment Title: " + getTitle());
+        System.out.println("Assignment Description: " + getDescription());
+        if (showDueDate) {
+            System.out.println("Assignment Due Date: " + getDueDate());
+        }
+        System.out.println();
+    }
+
     public static int getAssignmentCount() {
         return assignmentCount;
     }
 }
 
+
 public class Main {
     public static void main(String[] args) {
-        Student student1 = new Student("S101", "Abhinav", "abhinav.singh@kalvium.community", "ST101", "Computer Science");
-        Mentor mentor1 = new Mentor("M201", "Chandan", "chandan@kalvium.community", "MT201", "OOP Concepts");
+//        Student student1 = new Student("S101", "Abhinav", "abhinav.singh@kalvium.community", "ST101", "Computer Science");
+//        Mentor mentor1 = new Mentor("M201", "Chandan", "chandan@kalvium.community", "MT201", "OOP Concepts");
+//
+//        student1.displayStudentInfo();
+//        mentor1.displayMentorInfo();
+//
+//        AssignmentReport defaultReport = new AssignmentReport();
+//        defaultReport.displayReportDetails();
+//        defaultReport.generateReport();
+//
+//        AssignmentReport report = new AssignmentReport("R101", "OOP Assignment Report", "Details of the OOP Assignment");
+//        report.displayReportDetails();
+//        report.generateReport();
+//
+//        Assignment defaultAssignment = new Assignment();
+//        defaultAssignment.displayAssignmentInfo();
+//
+//        Assignment[] assignments = {
+//                new Assignment("K101", "EPS Assignment", "Write a case study report on Sri Lanka Bankruptcy", "30-08-2024"),
+//                new Assignment("K102", "OOP Assignment", "Implement a project using OOP concepts", "05-09-2024")
+//        };
+//
+//        for (Assignment assignment : assignments) {
+//            assignment.displayAssignmentInfo();
+//        }
 
-        student1.displayStudentInfo();
-        mentor1.displayMentorInfo();
+        Assignment assignment1 = new Assignment("K101", "EPS Assignment", "Write a case study report on Sri Lanka Bankruptcy", "30-08-2024");
+        Assignment assignment2 = new Assignment("K102", "OOP Assignment", "Implement a project using OOP concepts", "05-09-2024");
 
-        AssignmentReport defaultReport = new AssignmentReport();
-        defaultReport.displayReportDetails();
-        defaultReport.generateReport();
+        // displaying assignment info with due date
+        assignment1.displayAssignmentInfo(true);
 
-        AssignmentReport report = new AssignmentReport("R101", "OOP Assignment Report", "Details of the OOP Assignment");
-        report.displayReportDetails();
-        report.generateReport();
-
-        Assignment defaultAssignment = new Assignment();
-        defaultAssignment.displayAssignmentInfo();
-
-        Assignment[] assignments = {
-                new Assignment("K101", "EPS Assignment", "Write a case study report on Sri Lanka Bankruptcy", "30-08-2024"),
-                new Assignment("K102", "OOP Assignment", "Implement a project using OOP concepts", "05-09-2024")
-        };
-
-        for (Assignment assignment : assignments) {
-            assignment.displayAssignmentInfo();
-        }
+        // displaying assignment  info without due date
+        assignment2.displayAssignmentInfo(false);
 
         System.out.println("Organization: " + User.getOrganization());
         System.out.println("Total Users: " + User.getUserCount());
