@@ -1,4 +1,4 @@
-class User {
+abstract class User {
     protected String id;
     protected String name;
     protected String email;
@@ -53,6 +53,9 @@ class User {
     public static String getOrganization() {
         return organization;
     }
+
+    // Abstract method (Virtual Function) to be implemented by subclasses
+    public abstract void displayUserRole();
 }
 
 class Student extends User {
@@ -71,8 +74,14 @@ class Student extends User {
         this.major = major;
     }
 
+    @Override
+    public void displayUserRole() {
+        System.out.println("Role: Student");
+    }
+
     public void displayStudentInfo() {
         displayUserInfo();
+        displayUserRole();
         System.out.println("Student ID: " + studentId);
         System.out.println("Major: " + major);
         System.out.println();
@@ -95,13 +104,20 @@ class Mentor extends User {
         this.expertise = expertise;
     }
 
+    @Override
+    public void displayUserRole() {
+        System.out.println("Role: Mentor");
+    }
+
     public void displayMentorInfo() {
         displayUserInfo();
+        displayUserRole();
         System.out.println("Mentor ID: " + mentorId);
         System.out.println("Expertise: " + expertise);
         System.out.println();
     }
 }
+
 
 abstract class Report {
     protected String reportId;
@@ -241,17 +257,14 @@ public class Main {
 //            assignment.displayAssignmentInfo();
 //        }
 
-        Assignment assignment1 = new Assignment("K101", "EPS Assignment", "Write a case study report on Sri Lanka Bankruptcy", "30-08-2024");
-        Assignment assignment2 = new Assignment("K102", "OOP Assignment", "Implement a project using OOP concepts", "05-09-2024");
+        Student student1 = new Student("S101", "Abhinav", "abhinav.singh@kalvium.community", "ST101", "Computer Science");
+        Mentor mentor1 = new Mentor("M201", "Chandan", "chandan@kalvium.community", "MT201", "OOP Concepts");
 
-        // displaying assignment info with due date
-        assignment1.displayAssignmentInfo(true);
-
-        // displaying assignment  info without due date
-        assignment2.displayAssignmentInfo(false);
+        student1.displayStudentInfo();
+        mentor1.displayMentorInfo();
 
         System.out.println("Organization: " + User.getOrganization());
         System.out.println("Total Users: " + User.getUserCount());
-        System.out.println("Total Assignments: " + Assignment.getAssignmentCount());
+
     }
 }
