@@ -1,8 +1,8 @@
-interface Report {
-    void generateReport();
+interface TaskReport {
+    void generateTaskReport();
 }
 
-class BasicAssignmentReport implements Report {
+class BasicAssignmentReport implements TaskReport {
     private Assignment assignment;
 
     public BasicAssignmentReport(Assignment assignment) {
@@ -10,13 +10,13 @@ class BasicAssignmentReport implements Report {
     }
 
     @Override
-    public void generateReport() {
+    public void generateTaskReport() {
         System.out.println("Generating a basic report for assignment:");
         assignment.displayAssignmentInfo();
     }
 }
 
-class DetailedAssignmentReport implements Report {
+class DetailedAssignmentReport implements TaskReport {
     private Assignment assignment;
 
     public DetailedAssignmentReport(Assignment assignment) {
@@ -24,7 +24,7 @@ class DetailedAssignmentReport implements Report {
     }
 
     @Override
-    public void generateReport() {
+    public void generateTaskReport() {
         System.out.println("Generating a detailed report for assignment:");
         assignment.displayAssignmentInfo();
         System.out.println("Additional report details...");
@@ -136,14 +136,14 @@ class Assignment {
 }
 
 class AssignmentReporter {
-    private Report report;
+    private TaskReport taskReport;
 
-    public AssignmentReporter(Report report) {
-        this.report = report;
+    public AssignmentReporter(TaskReport taskReport) {
+        this.taskReport = taskReport;
     }
 
     public void generateReport() {
-        report.generateReport();
+        taskReport.generateTaskReport();
     }
 }
 
@@ -153,12 +153,14 @@ class Task {
     private String description;
     private String status;
     private User assignedUser;
+    private TaskReport taskReport;
 
-    public Task(String taskId, String taskName, String description, String status) {
+    public Task(String taskId, String taskName, String description, String status, TaskReport taskReport) {
         this.taskId = taskId;
         this.taskName = taskName;
         this.description = description;
         this.status = status;
+        this.taskReport = taskReport;
     }
 
     public void assignTask(User user) {
@@ -179,6 +181,7 @@ class Task {
         if (assignedUser != null) {
             System.out.println("Assigned to: " + assignedUser.name);
         }
+        taskReport.generateTaskReport();
     }
 }
 
@@ -195,17 +198,20 @@ public class Main {
 
         Assignment assignment = new Assignment("K101", "OOP Assignment", "Implement a project using OOP concepts", "05-09-2024");
 
-        Report basicReport = new BasicAssignmentReport(assignment);
-        Report detailedReport = new DetailedAssignmentReport(assignment);
+        // Creating reports based on the assignment
+        TaskReport basicReport = new BasicAssignmentReport(assignment);
+        TaskReport detailedReport = new DetailedAssignmentReport(assignment);
 
+        // Passing reports to AssignmentReporter to generate reports
         AssignmentReporter basicReporter = new AssignmentReporter(basicReport);
         basicReporter.generateReport();
 
         AssignmentReporter detailedReporter = new AssignmentReporter(detailedReport);
         detailedReporter.generateReport();
 
-        Task task1 = new Task("T101", "Task 1", "Implement the core features", "Not Started");
-        Task task2 = new Task("T102", "Task 2", "Write documentation", "Not Started");
+        // Creating tasks and assigning reports
+        Task task1 = new Task("T101", "Task 1", "Implement the core features", "Not Started", basicReport);
+        Task task2 = new Task("T102", "Task 2", "Write documentation", "Not Started", detailedReport);
 
         task1.assignTask(student1);
         task2.assignTask(mentor1);
