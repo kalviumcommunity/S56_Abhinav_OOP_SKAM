@@ -1,106 +1,94 @@
-interface RoleDisplay {
-    void displayUserRole();
+interface Report {
+    void generateReport();
+}
+
+class BasicAssignmentReport implements Report {
+    private Assignment assignment;
+
+    public BasicAssignmentReport(Assignment assignment) {
+        this.assignment = assignment;
+    }
+
+    @Override
+    public void generateReport() {
+        System.out.println("Generating a basic report for assignment:");
+        assignment.displayAssignmentInfo();
+    }
+}
+
+class DetailedAssignmentReport implements Report {
+    private Assignment assignment;
+
+    public DetailedAssignmentReport(Assignment assignment) {
+        this.assignment = assignment;
+    }
+
+    @Override
+    public void generateReport() {
+        System.out.println("Generating a detailed report for assignment:");
+        assignment.displayAssignmentInfo();
+        System.out.println("Additional report details...");
+    }
+}
+
+interface Role {
+    void displayRoleInfo();
+}
+
+class StudentRole implements Role {
+    private String studentId;
+    private String major;
+
+    public StudentRole(String studentId, String major) {
+        this.studentId = studentId;
+        this.major = major;
+    }
+
+    @Override
+    public void displayRoleInfo() {
+        System.out.println("Role: Student");
+        System.out.println("Student ID: " + studentId);
+        System.out.println("Major: " + major);
+    }
+}
+
+class MentorRole implements Role {
+    private String mentorId;
+    private String expertise;
+
+    public MentorRole(String mentorId, String expertise) {
+        this.mentorId = mentorId;
+        this.expertise = expertise;
+    }
+
+    @Override
+    public void displayRoleInfo() {
+        System.out.println("Role: Mentor");
+        System.out.println("Mentor ID: " + mentorId);
+        System.out.println("Expertise: " + expertise);
+    }
 }
 
 abstract class User {
     protected String id;
     protected String name;
     protected String email;
-    protected static int userCount = 0;
-    protected static String organization = "Kalvium";
+    protected Role role;
 
-    public User() {
-        this.id = "Default ID";
-        this.name = "Default Name";
-        this.email = "Default Email";
-        userCount++;
-    }
-
-    public User(String id, String name, String email) {
+    public User(String id, String name, String email, Role role) {
         this.id = id;
         this.name = name;
         this.email = email;
-        userCount++;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+        this.role = role;
     }
 
     public void displayUserInfo() {
-        System.out.println("User ID: " + getId());
-        System.out.println("User Name: " + getName());
-        System.out.println("User Email: " + getEmail());
-    }
-
-    public static int getUserCount() {
-        return userCount;
-    }
-
-    public static String getOrganization() {
-        return organization;
-    }
-}
-
-class Student extends User implements RoleDisplay {
-    private String studentId;
-    private String major;
-
-    public Student(String id, String name, String email, String studentId, String major) {
-        super(id, name, email);
-        this.studentId = studentId;
-        this.major = major;
-    }
-
-    @Override
-    public void displayUserRole() {
-        System.out.println("Role: Student");
-    }
-
-    public void displayStudentInfo() {
-        displayUserInfo();
-        displayUserRole();
-        System.out.println("Student ID: " + studentId);
-        System.out.println("Major: " + major);
-    }
-}
-
-class Mentor extends User implements RoleDisplay {
-    private String mentorId;
-    private String expertise;
-
-    public Mentor(String id, String name, String email, String mentorId, String expertise) {
-        super(id, name, email);
-        this.mentorId = mentorId;
-        this.expertise = expertise;
-    }
-
-    @Override
-    public void displayUserRole() {
-        System.out.println("Role: Mentor");
-    }
-
-    public void displayMentorInfo() {
-        displayUserInfo();
-        displayUserRole();
-        System.out.println("Mentor ID: " + mentorId);
-        System.out.println("Expertise: " + expertise);
+        System.out.println("User ID: " + id);
+        System.out.println("User Name: " + name);
+        System.out.println("User Email: " + email);
+        if (role != null) {
+            role.displayRoleInfo();
+        }
     }
 }
 
@@ -148,31 +136,84 @@ class Assignment {
 }
 
 class AssignmentReporter {
-    private Assignment assignment;
+    private Report report;
 
-    public AssignmentReporter(Assignment assignment) {
-        this.assignment = assignment;
+    public AssignmentReporter(Report report) {
+        this.report = report;
     }
 
     public void generateReport() {
-        System.out.println("Generating report for assignment:");
-        assignment.displayAssignmentInfo();
+        report.generateReport();
+    }
+}
+
+class Task {
+    private String taskId;
+    private String taskName;
+    private String description;
+    private String status;
+    private User assignedUser;
+
+    public Task(String taskId, String taskName, String description, String status) {
+        this.taskId = taskId;
+        this.taskName = taskName;
+        this.description = description;
+        this.status = status;
+    }
+
+    public void assignTask(User user) {
+        this.assignedUser = user;
+        System.out.println("Task '" + taskName + "' assigned to " + user.name);
+    }
+
+    public void updateTaskStatus(String newStatus) {
+        this.status = newStatus;
+        System.out.println("Task '" + taskName + "' status updated to " + newStatus);
+    }
+
+    public void displayTaskInfo() {
+        System.out.println("Task ID: " + taskId);
+        System.out.println("Task Name: " + taskName);
+        System.out.println("Task Description: " + description);
+        System.out.println("Task Status: " + status);
+        if (assignedUser != null) {
+            System.out.println("Assigned to: " + assignedUser.name);
+        }
     }
 }
 
 public class Main {
     public static void main(String[] args) {
-        Student student1 = new Student("S101", "Abhinav", "abhinav.singh@kalvium.community", "ST101", "Computer Science");
-        Mentor mentor1 = new Mentor("M201", "Chandan", "chandan@kalvium.community", "MT201", "OOP Concepts");
+        Role studentRole = new StudentRole("ST101", "Computer Science");
+        Role mentorRole = new MentorRole("MT201", "OOP Concepts");
 
-        student1.displayStudentInfo();
-        mentor1.displayMentorInfo();
+        User student1 = new User("S101", "Abhinav", "abhinav.singh@kalvium.community", studentRole) {};
+        User mentor1 = new User("M201", "Chandan", "chandan@kalvium.community", mentorRole) {};
 
-        System.out.println("Organization: " + User.getOrganization());
-        System.out.println("Total Users: " + User.getUserCount());
+        student1.displayUserInfo();
+        mentor1.displayUserInfo();
 
         Assignment assignment = new Assignment("K101", "OOP Assignment", "Implement a project using OOP concepts", "05-09-2024");
-        AssignmentReporter reporter = new AssignmentReporter(assignment);
-        reporter.generateReport();
+
+        Report basicReport = new BasicAssignmentReport(assignment);
+        Report detailedReport = new DetailedAssignmentReport(assignment);
+
+        AssignmentReporter basicReporter = new AssignmentReporter(basicReport);
+        basicReporter.generateReport();
+
+        AssignmentReporter detailedReporter = new AssignmentReporter(detailedReport);
+        detailedReporter.generateReport();
+
+        Task task1 = new Task("T101", "Task 1", "Implement the core features", "Not Started");
+        Task task2 = new Task("T102", "Task 2", "Write documentation", "Not Started");
+
+        task1.assignTask(student1);
+        task2.assignTask(mentor1);
+
+        task1.updateTaskStatus("In Progress");
+        task2.updateTaskStatus("Completed");
+
+        task1.displayTaskInfo();
+        task2.displayTaskInfo();
     }
 }
